@@ -13,9 +13,9 @@ class ldapModel extends model
 {
     public function identify($host, $dn, $pwd)
     {
-        openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
-        syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]dn: $dn, password: $pwd");
-        closelog();
+        // openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
+        // syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]dn: $dn, password: $pwd");
+        // closelog();
 
         $ret = '';
         $ds = ldap_connect($host);

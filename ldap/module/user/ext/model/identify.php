@@ -1,9 +1,9 @@
 <?php
 public function identify($account, $password)
 {
-    openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
-    syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]account: $account, password: $password");
-    closelog();
+    // openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
+    // syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]account: $account, password: $password");
+    // closelog();
 
     if (0 == strcmp('$', substr($account, 0, 1))) {
         return parent::identify(ltrim($account, '$'), $password);
@@ -16,9 +16,9 @@ public function identify($account, $password)
         if ($record) {
             $ldap = $this->loadModel('ldap');
             $ldap_account = $this->config->ldap->uid.'='.$account.',ou=People,'.$this->config->ldap->baseDN; // 注意：ldap account要按自己的格式填
-            openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
-            syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]ldap account: $ldap_account, password: $password");
-            closelog();
+            // openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
+            // syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]ldap account: $ldap_account, password: $password");
+            // closelog();
             $pass = $ldap->identify($this->config->ldap->host, $ldap_account, $password);
             if (0 == strcmp('Success', $pass)) {
                 $user = $record;

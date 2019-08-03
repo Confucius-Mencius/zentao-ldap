@@ -86,13 +86,13 @@ class ldap extends control
     public function identify($user, $pwd)
     {
         // 查看日志：journalctl -f | grep zentao-ldap
-        openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
-        syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]user: $user, password: $pwd");
+        // openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
+        // syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]user: $user, password: $pwd");
 
         $ret = false;
         $account = $this->config->ldap->uid.'='.$user.','.$this->config->ldap->baseDN;
-        syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]account: $account, password: $pwd");
-        closelog();
+        // syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]account: $account, password: $pwd");
+        // closelog();
 
         if (0 == strcmp('Success', $this->ldap->identify($this->config->ldap->host, $account, $pwd))) {
             $ret = true;
