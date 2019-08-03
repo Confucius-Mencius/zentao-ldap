@@ -38,6 +38,7 @@ class ldap extends control
         $this->display();
     }
 
+    // 将LDAP信息保存至config.php
     public function save()
     {
         if (!empty($_POST)) {

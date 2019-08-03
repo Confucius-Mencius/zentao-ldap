@@ -4,10 +4,11 @@ public function identify($account, $password)
     // openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
     // syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]account: $account, password: $password");
     // closelog();
-
+	// 如果添加$符号，则启用本地账号。
     if (0 == strcmp('$', substr($account, 0, 1))) {
         return parent::identify(ltrim($account, '$'), $password);
     } else {
+        // 进行LDAP用户验证
         $user = false;
         $record = $this->dao->select('*')->from(TABLE_USER)
             ->where('account')->eq($account)
