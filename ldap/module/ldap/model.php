@@ -13,26 +13,30 @@ class ldapModel extends model
 {
     public function identify($host, $dn, $pwd)
     {
+        openlog('zentao-ldap', LOG_PID | LOG_PERROR, LOG_LOCAL4);
+        syslog(LOG_DEBUG, "[__FILE__:__FUNCTION__]dn: $dn, password: $pwd");
+        closelog();
+
         $ret = '';
-    	$ds = ldap_connect($host);
-    	if ($ds) {
-    		ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
-    		ldap_bind($ds, $dn, $pwd);
+        $ds = ldap_connect($host);
+        if ($ds) {
+            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_bind($ds, $dn, $pwd);
 
             $ret = ldap_error($ds);
-    		ldap_close($ds);
-    	}  else {
+            ldap_close($ds);
+        } else {
             $ret = ldap_error($ds);
         }
 
-    	return $ret;
+        return $ret;
     }
 
     public function getUsers($config)
     {
         $ds = ldap_connect($config->host);
         if ($ds) {
-            ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
+            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_bind($ds, $config->bindDN, $config->bindPWD);
 
             $attrs = [$config->uid, $config->mail, $config->name];
